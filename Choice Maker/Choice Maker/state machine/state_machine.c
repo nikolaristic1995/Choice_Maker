@@ -16,11 +16,17 @@
 #include <string.h>
 #include <stdbool.h>
 
+/*
+char a[2][14];
+strcpy(a[0], "blah");
+strcpy(a[1], "hmm");
+*/
+
 volatile uint8_t event = NOTHING_IS_HAPPENING;
 volatile uint8_t state = WAITING;
 
 volatile uint8_t choice_counter = 0;
-char* choice[MAXIMUM_NUMBER_OF_CHOICES];
+char* choice[MAXIMUM_NUMBER_OF_CHOICES][MAXIMUM_NUMBER_OF_CHARACTERS];
 
 void state_machine_initialize(void){
 
@@ -60,12 +66,13 @@ void LCD_print_waiting_state(void){
 void state_machine_update_choice_matrix(void){
 
 	RGB_LED_set_red();
+	char* string;
 	
 	if(choice_counter < MAXIMUM_NUMBER_OF_CHOICES){
 		
-		choice[choice_counter] = USART_get_string();
+		string = USART_get_string();
 		
-		if(strlen(choice[choice_counter]) > 32){
+		if(strlen(string) > MAXIMUM_NUMBER_OF_CHARACTERS){
 			
 			LCD_clear_screen();
 			LCD_set_column_and_row(0,0);
@@ -92,9 +99,10 @@ void state_machine_update_choice_matrix(void){
 		
 		else{
 			
+			strcpy(choice[choice_counter], string);
 			choice_counter++;
 		
-			for(uint8_t i = 0; i < choice_counter; i++)USART_print_line(choice[i]);
+			for(uint8_t i = 0; i < choice_counter; i++)USART_print_line(choice[i]);  //ovooooooooooooooooooooooo
 	
 			_delay_us(1700); //ubaguje se displej ako se ne stavi delay
 			UDR; //to empty the UDR buffer. character 10 seems to make problem

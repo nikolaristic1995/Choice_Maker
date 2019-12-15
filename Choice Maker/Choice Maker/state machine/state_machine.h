@@ -17,13 +17,13 @@
 #define START 2
 
 #define MAXIMUM_NUMBER_OF_CHOICES 8
-#define CHOICE_STRING_MAXIMUM_NUMBER_OF_CHARACTERS 32
+#define MAXIMUM_NUMBER_OF_CHARACTERS 32
 #define NULL_TERMINATOR '\0'
 
 extern volatile uint8_t event;
 extern volatile uint8_t state;
 extern volatile uint8_t choice_counter;
-extern char* choice[MAXIMUM_NUMBER_OF_CHOICES];
+extern char* choice[MAXIMUM_NUMBER_OF_CHOICES][MAXIMUM_NUMBER_OF_CHARACTERS];
 
 void				state_machine_initialize				(void);
 
