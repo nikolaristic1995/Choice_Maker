@@ -14,9 +14,9 @@
 
 #define NOTHING_IS_HAPPENING 0
 #define CHOICE_IS_BEING_RECEIVED 1
-#define CHOICE_RECEIVING_IS_OVER 2
+#define START 2
 
-#define MAXIMUM_NUMBER_OF_CHOICES 10
+#define MAXIMUM_NUMBER_OF_CHOICES 9
 #define CHOICE_STRING_MAXIMUM_NUMBER_OF_CHARACTERS 32
 #define NULL_TERMINATOR '\0'
 
@@ -29,7 +29,11 @@ void				state_machine_initialize				(void);
 
 uint8_t				state_machine_get_event					(void);
 
+void				LCD_print_waiting_state					(void);
+
 void				state_machine_update_choice_matrix		(void);
+
+void				state_machine_start						(void);
 
 void				state_machine_routine					(void);
 

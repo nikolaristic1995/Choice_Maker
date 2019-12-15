@@ -28,11 +28,7 @@ void state_machine_initialize(void){
 	LCD_set_column_and_row(0, 0);
 	LCD_print(" Pa caaao maco! ");
 	_delay_ms(3100);
-	LCD_clear_screen();
-	LCD_set_column_and_row(0, 0);
-	LCD_print(" Unesi svoj 1.  ");
-	LCD_set_column_and_row(0, 1);
-	LCD_print("     izbor:     ");
+	LCD_print_waiting_state();
 	RGB_LED_set_green();
 	
 	event = NOTHING_IS_HAPPENING;
@@ -43,41 +39,53 @@ uint8_t state_machine_get_event(void){
 	
 	if(USART_character_is_received())return CHOICE_IS_BEING_RECEIVED;
 	
-	/*else if(buttons_and_switches_pause_button_is_pushed())return PAUSE;
-	
-	else if(buttons_and_switches_save_parameters_button_is_pushed())return SAVE;
-	
-	else if(buttons_and_switches_cursor_up_button_is_pushed())return CURSOR_UP;
-	
-	else if(buttons_and_switches_cursor_down_button_is_pushed())return CURSOR_DOWN;
-	
-	else if(buttons_and_switches_increment_by_1_button_is_pushed())return INCREMENT_BY_1;
-	
-	else if(buttons_and_switches_increment_by_10_button_is_pushed())return INCREMENT_BY_10;
-	
-	else if(buttons_and_switches_increment_by_100_button_is_pushed())return INCREMENT_BY_100;
-	
-	else if(buttons_and_switches_increment_by_1000_button_is_pushed())return INCREMENT_BY_1000;
-	
-	else if(buttons_and_switches_increment_by_10000_button_is_pushed())return INCREMENT_BY_10000;
-	
 	else if(buttons_and_switches_start_button_is_pushed())return START;
-	
-	else if(buttons_and_switches_restart_button_is_pushed())return RESTART;*/
 	
 	else return NOTHING_IS_HAPPENING;
 }
 
-void state_machine_update_choice_matrix(void){
-
-    choice[choice_counter] = USART_get_string();
-	choice_counter++;
+void LCD_print_waiting_state(void){
 	
 	LCD_clear_screen();
-	LCD_set_column_and_row(0,0);
-	LCD_print(choice[choice_counter - 1]);
+	LCD_set_column_and_row(0, 0);
+	LCD_print(" Unesi svoj ");
+	char character = common_get_digit(choice_counter + 1);
+	LCD_send_character(character);
+	LCD_print(".");
+	LCD_set_column_and_row(0, 1);
+	LCD_print("     izbor:     ");
+}
+
+void state_machine_update_choice_matrix(void){
 	
-	UDR; //to empty the UDR buffer. character 10 seems to make problem
+	if(choice_counter < MAXIMUM_NUMBER_OF_CHOICES){
+		choice[choice_counter] = USART_get_string();
+		choice_counter++;
+	
+		//LCD_clear_screen();
+		//LCD_set_column_and_row(0,0);
+		//LCD_print(choice[choice_counter - 1]);
+	
+		_delay_us(1700); //ubaguje se displej ako se ne stavi delay
+	
+		UDR; //to empty the UDR buffer. character 10 seems to make problem
+		//USART_print_character(UDR);
+		LCD_print_waiting_state();
+	}
+	
+	else{
+		
+		LCD_clear_screen();
+		LCD_set_column_and_row(0,0);
+		LCD_print(" Prekoracila si ");
+		LCD_set_column_and_row(0,1);
+		LCD_print(" granicu izbora ");
+	}
+}
+
+void state_machine_start(void){
+	//state = 3;
+	
 }
 
 void state_machine_routine(void){
@@ -90,7 +98,9 @@ void state_machine_routine(void){
 			
 			switch(event){
 				
-				case CHOICE_IS_BEING_RECEIVED: state_machine_update_choice_matrix();break;
+				case CHOICE_IS_BEING_RECEIVED: state_machine_update_choice_matrix();break; //ulazi beskonacno u ovo
+				
+				case START: state_machine_start();
 			}
 			
 			break;
