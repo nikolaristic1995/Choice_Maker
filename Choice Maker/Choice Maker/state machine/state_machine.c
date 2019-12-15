@@ -26,7 +26,7 @@ void state_machine_initialize(void){
 
 	LCD_clear_screen();
 	LCD_set_column_and_row(0, 0);
-	LCD_print(" Pa caaao maco! ");
+	LCD_print(" PA CAAAO MACO! ");
 	_delay_ms(3100);
 	LCD_print_waiting_state();
 	RGB_LED_set_green();
@@ -55,13 +55,14 @@ void LCD_print_waiting_state(void){
 	LCD_set_column_and_row(0, 1);
 	LCD_print("     izbor:     ");
 }
-
+//8 izbora je limit
 void state_machine_update_choice_matrix(void){
-	
+
 	if(choice_counter < MAXIMUM_NUMBER_OF_CHOICES){
+		
 		choice[choice_counter] = USART_get_string();
 		choice_counter++;
-	
+
 		//LCD_clear_screen();
 		//LCD_set_column_and_row(0,0);
 		//LCD_print(choice[choice_counter - 1]);
@@ -70,21 +71,37 @@ void state_machine_update_choice_matrix(void){
 	
 		UDR; //to empty the UDR buffer. character 10 seems to make problem
 		//USART_print_character(UDR);
-		LCD_print_waiting_state();
+		if(choice_counter == MAXIMUM_NUMBER_OF_CHOICES){
+			
+			LCD_clear_screen();
+			LCD_set_column_and_row(0,0);
+			LCD_print("Unela si maximum");
+			LCD_set_column_and_row(0,1);
+			LCD_print(" broj izbora :) ");
+		}
+		
+		else LCD_print_waiting_state();
 	}
 	
 	else{
 		
+		USART_get_string();	//praznjenje buffera
+		_delay_us(1700);	//zakuca se bez ovoga
+		UDR;				//praznjenje buffera
+		
 		LCD_clear_screen();
 		LCD_set_column_and_row(0,0);
-		LCD_print(" Prekoracila si ");
+		LCD_print(" STOP IT IVANA! ");
 		LCD_set_column_and_row(0,1);
-		LCD_print(" granicu izbora ");
+		LCD_print("   IT HURTS!  ");
 	}
 }
 
 void state_machine_start(void){
-	//state = 3;
+	
+	LCD_clear_screen();
+	LCD_set_column_and_row(0,0);
+	LCD_print("taster stisnut");
 	
 }
 
@@ -98,9 +115,10 @@ void state_machine_routine(void){
 			
 			switch(event){
 				
+				case START: state_machine_start();
+				
 				case CHOICE_IS_BEING_RECEIVED: state_machine_update_choice_matrix();break; //ulazi beskonacno u ovo
 				
-				case START: state_machine_start();
 			}
 			
 			break;

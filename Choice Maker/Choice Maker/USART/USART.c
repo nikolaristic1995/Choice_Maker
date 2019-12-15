@@ -178,7 +178,7 @@ void USART_echo(void){
 
 bool USART_character_is_received(void){
 	
-	if((UCSRA & (1 << RXC)) == 0)return true;
+	if((UCSRA & (1 << RXC)) == 0)return false;
 	
-	else return false;
+	else return true;  
 }
