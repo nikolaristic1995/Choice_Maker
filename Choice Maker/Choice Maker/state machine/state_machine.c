@@ -64,21 +64,54 @@ void state_machine_update_choice_matrix(void){
 	if(choice_counter < MAXIMUM_NUMBER_OF_CHOICES){
 		
 		choice[choice_counter] = USART_get_string();
-		choice_counter++;
-	
-		_delay_us(1700); //ubaguje se displej ako se ne stavi delay
-		UDR; //to empty the UDR buffer. character 10 seems to make problem
 		
-		if(choice_counter == MAXIMUM_NUMBER_OF_CHOICES){
+		if(strlen(choice[choice_counter]) > 32){
 			
 			LCD_clear_screen();
 			LCD_set_column_and_row(0,0);
-			LCD_print("Unela si maximum");
+			LCD_print("Prekoracila si");
 			LCD_set_column_and_row(0,1);
-			LCD_print(" broj izbora :) ");
+			LCD_print("opseg karaktera");
+			
+			_delay_us(1700); //ubaguje se displej ako se ne stavi delay
+			UDR; //to empty the UDR buffer. character 10 seems to make problem
+			
+			_delay_ms(3000);	
+			
+			if(choice_counter == MAXIMUM_NUMBER_OF_CHOICES){
+				
+				LCD_clear_screen();
+				LCD_set_column_and_row(0,0);
+				LCD_print("Unela si maximum");
+				LCD_set_column_and_row(0,1);
+				LCD_print(" broj izbora :) ");
+			}
+			
+			else LCD_print_waiting_state();		
 		}
 		
-		else LCD_print_waiting_state();
+		else{
+			
+			choice_counter++;
+		
+			for(uint8_t i = 0; i < choice_counter; i++)USART_print_line(choice[i]);
+	
+			_delay_us(1700); //ubaguje se displej ako se ne stavi delay
+			UDR; //to empty the UDR buffer. character 10 seems to make problem
+		
+			if(choice_counter == MAXIMUM_NUMBER_OF_CHOICES){
+			
+				LCD_clear_screen();
+				LCD_set_column_and_row(0,0);
+				LCD_print("Unela si maximum");
+				LCD_set_column_and_row(0,1);
+				LCD_print(" broj izbora :) ");
+			}
+		
+			else LCD_print_waiting_state();
+		
+		}
+		
 	}
 	
 	else{
@@ -112,20 +145,31 @@ void state_machine_start(void){
 	
 	buzzer_activate_button_has_been_pushed_tone();
 	while(buttons_and_switches_start_button_is_pushed());
-	LCD_clear_screen();
-	RGB_LED_set_red();
-/* 
-	increment_by_number(10000);
+	LCD_clear_screen(); //ovo mozda nece biti potrebno
+	RGB_LED_set_red();  //ovo mozda nece biti potrebno	
+}
 
-	RGB_LED_set_dark_blue();
-	buzzer_activate_button_has_been_pushed_tone();
-
-	while(buttons_and_switches_increment_by_10000_button_is_pushed());
-
-	RGB_LED_set_red();
+void state_machine_bingo_choice(void){
 	
-*/
+	uint8_t time_ms = 200;
 	
+	for(uint8_t number_of_dramatic_increments = 0; number_of_dramatic_increments < 5; number_of_dramatic_increments++){
+		
+		for(uint8_t number_of_choices = 0; number_of_choices < choice_counter; number_of_choices++){
+		
+			LCD_clear_screen();
+			LCD_set_column_and_row(0,0);
+			LCD_print(choice[number_of_choices]);
+			buzzer_activate_button_has_been_pushed_tone();
+			_delay_ms(100);
+			
+		}
+		
+		time_ms += 100;
+	}
+	
+	buzzer_activate_treatment_is_finished_tone();
+	while(1);
 }
 
 void state_machine_routine(void){
@@ -150,9 +194,8 @@ void state_machine_routine(void){
 		case BINGOING_CHOICE: {
 			
 			switch(event){
-				
-				
-				
+						
+				default: state_machine_bingo_choice();
 			}
 			
 		}

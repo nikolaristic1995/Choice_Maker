@@ -35,6 +35,8 @@ void				state_machine_update_choice_matrix		(void);
 
 void				state_machine_start						(void);
 
+void				state_machine_bingo_choice				(void);
+
 void				state_machine_routine					(void);
 
 #endif /* STATE_MACHINE_H_ */
