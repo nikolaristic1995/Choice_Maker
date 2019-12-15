@@ -4,6 +4,7 @@
 #include "ports.h"
 #include "timer_0.h"
 #include "USART.h"
+#include "buttons_and_switches.h"
 #include "I2C.h"
 #include "LCD.h"
 #include "RGB_LED.h"
@@ -21,6 +22,7 @@ int main(void){
     timer_0_initialize();
     PWM_2_initialize();
     USART_initialize();
+	buttons_and_switches_initialize();
     RGB_LED_initialize();
 	buzzer_initialize();
 	state_machine_initialize();

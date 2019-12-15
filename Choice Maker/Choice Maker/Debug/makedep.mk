@@ -2,6 +2,8 @@
 # Automatically-generated file. Do not edit or delete the file
 ################################################################################
 
+buttons and switches\buttons_and_switches.c
+
 buzzer\buzzer.c
 
 common\common.c

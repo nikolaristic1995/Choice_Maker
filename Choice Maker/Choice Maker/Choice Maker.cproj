@@ -108,6 +108,7 @@
       <Value>../PWM 2</Value>
       <Value>../buzzer</Value>
       <Value>../state machine</Value>
+      <Value>../buttons and switches</Value>
     </ListValues>
   </avrgcc.compiler.directories.IncludePaths>
   <avrgcc.compiler.optimization.level>Optimize (-O1)</avrgcc.compiler.optimization.level>
@@ -130,6 +131,12 @@
     </ToolchainSettings>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="buttons and switches\buttons_and_switches.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="buttons and switches\buttons_and_switches.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="buzzer\buzzer.c">
       <SubType>compile</SubType>
     </Compile>
@@ -202,6 +209,7 @@
     <Folder Include="LCD" />
     <Folder Include="common" />
     <Folder Include="buzzer" />
+    <Folder Include="buttons and switches" />
     <Folder Include="state machine" />
     <Folder Include="timer 0" />
     <Folder Include="PWM 2" />

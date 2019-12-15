@@ -4,6 +4,7 @@
 #include "ports.h"
 #include "timer_0.h"
 #include "USART.h"
+#include "buttons_and_switches.h"
 #include "I2C.h"
 #include "LCD.h"
 #include "RGB_LED.h"
@@ -13,12 +14,14 @@
 #include <util/delay.h>
 #include "state_machine.h"
 #include <string.h>
+#include <stdbool.h>
 
 volatile uint8_t event = NOTHING_IS_HAPPENING;
 volatile uint8_t state = WAITING;
+
 volatile uint8_t choice_counter = 0;
 char* choice[MAXIMUM_NUMBER_OF_CHOICES];
-//choice[redni broj izbora][choice string]
+
 void state_machine_initialize(void){
 
 	LCD_clear_screen();
@@ -75,7 +78,6 @@ void state_machine_update_choice_matrix(void){
 	LCD_print(choice[choice_counter - 1]);
 	
 	UDR; //to empty the UDR buffer. character 10 seems to make problem
-	
 }
 
 void state_machine_routine(void){
