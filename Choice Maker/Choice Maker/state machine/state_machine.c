@@ -24,22 +24,23 @@ char* choice[MAXIMUM_NUMBER_OF_CHOICES];
 
 void state_machine_initialize(void){
 
+	RGB_LED_set_red();
 	LCD_clear_screen();
 	LCD_set_column_and_row(0, 0);
 	LCD_print(" PA CAAAO MACO! ");
 	_delay_ms(3100);
 	LCD_print_waiting_state();
-	RGB_LED_set_green();
 	
 	event = NOTHING_IS_HAPPENING;
 	state = WAITING;
+	RGB_LED_set_green();
 }
 
 uint8_t state_machine_get_event(void){
 	
 	if(USART_character_is_received())return CHOICE_IS_BEING_RECEIVED;
 	
-	else if(buttons_and_switches_start_button_is_pushed())return START;
+	else if(buttons_and_switches_start_button_is_pushed() && choice_counter > 1)return START; //mora biti bar dva izbora
 	
 	else return NOTHING_IS_HAPPENING;
 }
@@ -58,19 +59,16 @@ void LCD_print_waiting_state(void){
 //8 izbora je limit
 void state_machine_update_choice_matrix(void){
 
+	RGB_LED_set_red();
+	
 	if(choice_counter < MAXIMUM_NUMBER_OF_CHOICES){
 		
 		choice[choice_counter] = USART_get_string();
 		choice_counter++;
-
-		//LCD_clear_screen();
-		//LCD_set_column_and_row(0,0);
-		//LCD_print(choice[choice_counter - 1]);
 	
 		_delay_us(1700); //ubaguje se displej ako se ne stavi delay
-	
 		UDR; //to empty the UDR buffer. character 10 seems to make problem
-		//USART_print_character(UDR);
+		
 		if(choice_counter == MAXIMUM_NUMBER_OF_CHOICES){
 			
 			LCD_clear_screen();
@@ -95,13 +93,38 @@ void state_machine_update_choice_matrix(void){
 		LCD_set_column_and_row(0,1);
 		LCD_print("   IT HURTS!  ");
 	}
+	
+	buzzer_activate_countdown_tone();
+	RGB_LED_set_green();
 }
 
 void state_machine_start(void){
 	
+	state = BINGOING_CHOICE;
+	
+	RGB_LED_set_dark_blue();
+	
 	LCD_clear_screen();
-	LCD_set_column_and_row(0,0);
-	LCD_print("taster stisnut");
+	LCD_set_column_and_row(0, 0);
+	LCD_print(" Otpusti taster ");
+	LCD_set_column_and_row(0, 1);
+	LCD_print("i sacekaj odluku");
+	
+	buzzer_activate_button_has_been_pushed_tone();
+	while(buttons_and_switches_start_button_is_pushed());
+	LCD_clear_screen();
+	RGB_LED_set_red();
+/* 
+	increment_by_number(10000);
+
+	RGB_LED_set_dark_blue();
+	buzzer_activate_button_has_been_pushed_tone();
+
+	while(buttons_and_switches_increment_by_10000_button_is_pushed());
+
+	RGB_LED_set_red();
+	
+*/
 	
 }
 
@@ -115,13 +138,23 @@ void state_machine_routine(void){
 			
 			switch(event){
 				
-				case START: state_machine_start();
+				case START: state_machine_start();break;
 				
 				case CHOICE_IS_BEING_RECEIVED: state_machine_update_choice_matrix();break; //ulazi beskonacno u ovo
 				
 			}
 			
 			break;
+		}
+		
+		case BINGOING_CHOICE: {
+			
+			switch(event){
+				
+				
+				
+			}
+			
 		}
 	}
 }

@@ -17,13 +17,13 @@ int main(void){
 	
     sei();
 	
+	RGB_LED_initialize();
     LCD_initialize();
     ports_initialize();
     timer_0_initialize();
     PWM_2_initialize();
     USART_initialize();
 	buttons_and_switches_initialize();
-    RGB_LED_initialize();
 	buzzer_initialize();
 	state_machine_initialize();
 	
