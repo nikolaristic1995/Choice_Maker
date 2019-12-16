@@ -186,10 +186,11 @@ bool USART_character_is_received(void){
 
 void USART_empty_the_RX_buffer(void){
 
-	if(USART_character_is_received()){
+	//if(USART_character_is_received()){
+	for(uint8_t iterator = 0; iterator < 50; iterator++){
 	
-		for(uint8_t iterator = 0; iterator < 50; iterator++)USART_get_character();		//empty the buffer
-		_delay_us(1700);		//ubaguje se displej ako se ne stavi delay
-		UDR;					//to empty the UDR buffer. character 10 seems to make problem
+				uint8_t junk = UDR;
+				_delay_us(1700);		//ubaguje se displej ako se ne stavi delay
 	}
+	//}
 }

@@ -107,11 +107,13 @@ void state_machine_update_choice_matrix(void){
 	
 		_delay_ms(3000);
 	
-		LCD_print_in_two_rows("PRITISNI TASTER", "  BEZ EMOCIJE!  ");
+		LCD_print_in_two_rows("PRITISNI TASTER", "  BEZ EMOCIJE!  ");	
 	}
 	
 	buzzer_activate_interaction_tone();
 	RGB_LED_set_green();
+	
+	USART_empty_the_RX_buffer();
 }
 
 void state_machine_start(void){
@@ -220,7 +222,6 @@ void state_machine_bingo_choice(void){
 	buzzer_activate_interaction_tone();
 	
 	USART_empty_the_RX_buffer();
-	
 }
 
 void state_machine_error_message(void){
