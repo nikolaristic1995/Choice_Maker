@@ -35,4 +35,6 @@ int main(void){
     } 
 }
 
+//ne radi ispis u dva reda, plus clearovanje bufera moze da zakoci aplikaciju. Testiraj i na mobilnom.
+
 //Svi projektni kodovi se mogu naci na GMX mailu.
