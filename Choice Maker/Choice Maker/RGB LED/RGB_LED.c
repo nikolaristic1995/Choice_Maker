@@ -86,6 +86,11 @@ void RGB_LED_set_red(void){
 	RGB_LED_set_color(SHINE, DONT_SHINE, DONT_SHINE);
 }
 
+void RGB_LED_set_white(void){
+	
+	RGB_LED_set_color(SHINE, SHINE, SHINE);
+}
+
 void RGB_LED_light_show(void){
 	
 	RGB_LED_set_light_blue();
@@ -104,5 +109,8 @@ void RGB_LED_light_show(void){
 	_delay_ms(500);
 	
 	RGB_LED_set_pink();
+	_delay_ms(500);	
+	
+	RGB_LED_set_white();
 	_delay_ms(500);	
 }

@@ -43,6 +43,8 @@ void					RGB_LED_set_pink							(void);
 
 void					RGB_LED_set_red								(void);
 
+void					RGB_LED_set_white							(void);
+
 void					RGB_LED_light_show							(void);
 
 #endif /* RGB_LED_H_ */

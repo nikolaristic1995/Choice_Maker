@@ -26,7 +26,7 @@ int main(void){
 	buttons_and_switches_initialize();
 	buzzer_initialize();
 	state_machine_initialize();
-	
+
 	USART_print_line("APLIKACIJA JE ZAPOCETA");
 	
     while (INFINITE_LOOP){
