@@ -128,9 +128,12 @@ void state_machine_start(void){
 
 void state_machine_bingo_choice(void){
 	
-	uint32_t time_ms = 200;
+	uint32_t time_ms = 50;
 	
 	for(uint8_t number_of_dramatic_increments = 0; number_of_dramatic_increments < 7; number_of_dramatic_increments++){
+		
+		LCD_set_column_and_row(0,1);
+		LCD_print("                ");
 		
 		if(number_of_dramatic_increments == 0)RGB_LED_set_light_blue();	
 		
@@ -149,13 +152,25 @@ void state_machine_bingo_choice(void){
 		
 		for(uint8_t number_of_choices = 0; number_of_choices < choice_counter; number_of_choices++){
 			
+			for(uint8_t i = 0; i < 3; i++){
+						
+				LCD_clear_screen();
+				LCD_set_column_and_row(0,0);
+				LCD_set_column_and_row(0,1);
+				LCD_print("                ");
+			}
+			LCD_set_column_and_row(0,1);
+			LCD_print("                ");
+			LCD_set_column_and_row(0,0);
 			LCD_print_first_row(choice[number_of_choices]);
+			LCD_set_column_and_row(0,1);
+			LCD_print("                ");
 			
 			buzzer_activate_bingo_tone();
 			timer_0_delay_in_milliseconds(time_ms);
 		}
 		
-		time_ms += 30;
+		time_ms += 10;
 	}
 	
 	srand(strlen(choice[0]) + strlen(choice[1]) + choice_counter);
@@ -166,7 +181,22 @@ void state_machine_bingo_choice(void){
 	
 	else if((rand() % choice_counter + 3) == (choice_counter + 2))LCD_print_in_two_rows("Zagrli nekog bez", "ikakve emocije!");
 							
-	else LCD_print_first_row(choice[rand() % choice_counter]);
+	else {
+		
+		for(uint8_t i = 0; i < 3; i++){
+			
+			LCD_clear_screen();
+			LCD_set_column_and_row(0,0);
+			LCD_set_column_and_row(0,1);
+			LCD_print("                ");
+		}
+		LCD_set_column_and_row(0,1);
+		LCD_print("                ");
+		LCD_set_column_and_row(0,0);
+		LCD_print_first_row(choice[rand() % choice_counter]);
+		LCD_set_column_and_row(0,1);
+		LCD_print("                ");
+	}
 		
 	choice_counter = 0;
 	
@@ -186,9 +216,10 @@ void state_machine_bingo_choice(void){
 	
 	state_machine_print_waiting_state();
 	
-	USART_empty_the_RX_buffer();
-	
 	RGB_LED_set_green();
+	buzzer_activate_interaction_tone();
+	
+	USART_empty_the_RX_buffer();
 	
 }
 
@@ -207,9 +238,10 @@ void state_machine_error_message(void){
 		while(buttons_and_switches_start_button_is_pushed());
 	
 		state_machine_print_waiting_state();
-	
+		
 		RGB_LED_set_green();
-	
+		buzzer_activate_interaction_tone();
+		
 		USART_empty_the_RX_buffer();
 	}
 }

@@ -23,7 +23,7 @@ void buzzer_activate_button_has_been_pushed_tone(void){
 
 void buzzer_activate_interaction_tone(void){
 	
-	buzzer_activate_tone(50, 100);
+	buzzer_activate_tone(60, 100);
 }
 
 void buzzer_activate_bingo_tone(void){
