@@ -72,4 +72,10 @@ void LCD_print(/*const*/ char *str);
  */
 void LCD_blink_cursor(uint8_t on_off);
 
+void LCD_print_first_row(char* string);
+
+void LCD_print_second_row(char* string);
+
+void LCD_print_in_two_rows(char* first_row_string, char* second_row_string);
+
 #endif /* LCD_H_ */

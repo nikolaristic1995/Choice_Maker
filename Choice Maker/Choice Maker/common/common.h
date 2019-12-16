@@ -3,6 +3,8 @@
 
 #define INFINITE_LOOP 1
 
+#include <avr/io.h>
+
 unsigned char							common_get_digit								(unsigned char digit);
 
 unsigned char							common_get_tenth_digit							(uint32_t number);

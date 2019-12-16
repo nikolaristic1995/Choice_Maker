@@ -100,3 +100,23 @@ void LCD_blink_cursor(uint8_t on_off)
 	else
 		LCD_send_byte(0b1100,LCD_COMMAND);	//blink off
 }
+
+void LCD_print_first_row(char* string){
+	
+	LCD_clear_screen();
+	
+	LCD_set_column_and_row(0, 0);
+	LCD_print(string);
+}
+
+void LCD_print_second_row(char* string){
+	
+	LCD_set_column_and_row(0, 1);
+	LCD_print(string);
+}
+
+void LCD_print_in_two_rows(char* first_row_string, char* second_row_string){
+	
+	LCD_print_first_row(first_row_string);
+	LCD_print_second_row(second_row_string);
+}

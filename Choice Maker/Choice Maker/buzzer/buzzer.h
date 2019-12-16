@@ -13,8 +13,10 @@ void				buzzer_activate_tone											(uint8_t duty_cycle_percentage, uint32_t 
 
 void				buzzer_activate_button_has_been_pushed_tone						(void);
 
-void				buzzer_activate_countdown_tone									(void);
+void				buzzer_activate_interaction_tone								(void);
 
-void				buzzer_activate_treatment_is_finished_tone						(void);
+void				buzzer_activate_bingo_tone										(void);
+
+void				buzzer_activate_choice_has_been_made_tone						(void);
 
 #endif /* BUZZER_H_ */

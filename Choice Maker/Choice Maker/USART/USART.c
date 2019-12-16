@@ -5,6 +5,7 @@
 #include <stdbool.h>
 #include "common.h"
 #include "USART.h"
+#include <util/delay.h>
 
 char string[32];
 
@@ -181,4 +182,14 @@ bool USART_character_is_received(void){
 	if((UCSRA & (1 << RXC)) == 0)return false;
 	
 	else return true;  
+}
+
+void USART_empty_the_RX_buffer(void){
+
+	if(USART_character_is_received()){
+	
+		for(uint8_t iterator = 0; iterator < 50; iterator++)USART_get_character();		//empty the buffer
+		_delay_us(1700);		//ubaguje se displej ako se ne stavi delay
+		UDR;					//to empty the UDR buffer. character 10 seems to make problem
+	}
 }

@@ -34,4 +34,6 @@ void					USART_echo								(void);
 
 bool					USART_character_is_received				(void);
 
+void					USART_empty_the_RX_buffer				(void);
+
 #endif /* USART_H_ */

@@ -4,7 +4,7 @@
 
 void RGB_LED_initialize(void){
 
-	RGB_LED_set_red();
+	//RGB_LED_set_pink();
 }
 
 void RGB_LED_send_logic_zero(void){

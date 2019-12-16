@@ -4,7 +4,7 @@
 
 void buzzer_initialize(void){
 	
-	buzzer_activate_countdown_tone();
+	//buzzer_activate_countdown_tone();
 }
 
 void buzzer_activate_tone(uint8_t duty_cycle_percentage, uint32_t time_of_enabled_tone){
@@ -21,12 +21,17 @@ void buzzer_activate_button_has_been_pushed_tone(void){
 	buzzer_activate_tone(196, 50);
 }
 
-void buzzer_activate_countdown_tone(void){
+void buzzer_activate_interaction_tone(void){
 	
 	buzzer_activate_tone(50, 100);
 }
 
-void buzzer_activate_treatment_is_finished_tone(void){
+void buzzer_activate_bingo_tone(void){
+	
+	buzzer_activate_tone(255, 100);
+}
+
+void buzzer_activate_choice_has_been_made_tone(void){
 
 	PWM_2_set_duty_cycle_percentage(50);
 
