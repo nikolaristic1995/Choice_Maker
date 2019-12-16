@@ -88,6 +88,10 @@ void state_machine_update_choice_matrix(void){
 			
 			strcpy(choice[choice_counter], string);
 			choice_counter++;
+			
+			USART_print_number(choice_counter);
+			USART_print(". ");
+			USART_print_line(string);
 		
 			if(choice_counter == MAXIMUM_NUMBER_OF_CHOICES){
 				

@@ -24,7 +24,7 @@ int main(void){
 	buzzer_initialize();
 	state_machine_initialize();
 
-	USART_print_line("APLIKACIJA JE ZAPOCETA");
+	USART_print_line("APLIKACIJA JE ZAPOCETA <3");
 	
     while (INFINITE_LOOP){
 		
