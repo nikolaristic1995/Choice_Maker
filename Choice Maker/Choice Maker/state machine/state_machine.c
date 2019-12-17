@@ -107,7 +107,7 @@ void state_machine_update_choice_matrix(void){
 	
 	else {
 		
-		LCD_print_in_two_rows("   STOP IT! ", "   IT HURTS!  ");
+		LCD_print_in_two_rows("STOP IT, DAMN IT", "   IT HURTS!  ");
 	
 		_delay_ms(3000);
 	
@@ -181,11 +181,11 @@ void state_machine_bingo_choice(void){
 	
 	srand(strlen(choice[0]) + strlen(choice[1]) + choice_counter);
 	
-	if((rand() % choice_counter + 1) == choice_counter)LCD_print_first_row(" Idi u kafanu! ");
+	if((rand() % choice_counter + 1) == choice_counter)LCD_print_in_two_rows("Drink alcohol &", "enjoy the moment");
 	
-	else if((rand() % choice_counter + 2) == (choice_counter + 1))LCD_print_in_two_rows("  Drop it like  ", "    it's hot!     ");
+	//else if((rand() % choice_counter + 2) == (choice_counter + 1))LCD_print_in_two_rows("  Drop it like  ", "    it's hot!     ");
 	
-	else if((rand() % choice_counter + 3) == (choice_counter + 2))LCD_print_in_two_rows("Zagrli nekog bez", "ikakve emocije!");
+	//else if((rand() % choice_counter + 3) == (choice_counter + 2))LCD_print_in_two_rows("Zagrli nekog bez", "ikakve emocije!");
 							
 	else {
 		
@@ -225,6 +225,7 @@ void state_machine_bingo_choice(void){
 	RGB_LED_set_green();
 	buzzer_activate_interaction_tone();
 	
+	USART_print_line("");
 	USART_empty_the_RX_buffer();
 }
 
