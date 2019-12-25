@@ -9,12 +9,14 @@ volatile uint16_t reset_sum_of_impulses_timer = 0;
 volatile uint8_t reset_sum_of_impulses_time_count = RESET_SUM_OF_IMPULSES_TIME_COUNT;
 volatile uint32_t countdown_timer = 0;
 volatile uint8_t number_of_counts = NUMBER_OF_COUNTS;
+volatile uint16_t timer_random_count = 0;
 
 ISR (TIMER0_COMP_vect){
 
 	timer_counter++;
 	countdown_timer++;
 	reset_sum_of_impulses_timer++;
+	timer_random_count++;
 }
 
 void timer_0_initialize(void){
@@ -81,10 +83,15 @@ uint8_t timer_0_countdown_is_over(void){
 		
 		//GLCD_print_number_of_counts();
 		
-		if(number_of_counts)buzzer_activate_countdown_tone();
+		//if(number_of_counts)buzzer_activate_countdown_tone();
 	}
 	
 	if(!number_of_counts)return true;
 	
 	else return false;
+}
+
+uint16_t timer_0_get_timer_random_count(void){
+	
+	return timer_random_count;
 }

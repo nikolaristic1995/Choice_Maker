@@ -179,7 +179,7 @@ void state_machine_bingo_choice(void){
 		time_ms += 10;
 	}
 	
-	srand(strlen(choice[0]) + strlen(choice[1]) + choice_counter);
+	srand(strlen(choice[0]) + strlen(choice[1]) + choice_counter + timer_0_get_timer_random_count());
 	
 	if((rand() % choice_counter + 1) == choice_counter)LCD_print_in_two_rows("Drink alcohol &", "enjoy the moment");
 	

@@ -24,6 +24,7 @@ extern volatile uint16_t sum_of_impulses_timer;
 extern volatile uint8_t reset_sum_of_impulses_time_count;
 extern volatile uint32_t countdown_timer;
 extern volatile uint8_t number_of_counts;
+extern volatile uint16_t timer_random_count;
 
 void						timer_0_initialize								(void);
 
@@ -42,5 +43,7 @@ void						timer_0_reset_number_of_counts					(void);
 uint8_t						timer_0_get_number_of_counts					(void);
 
 uint8_t						timer_0_countdown_is_over						(void);
+
+uint16_t					timer_0_get_timer_random_count					(void);
 
 #endif /* TIMER_0_H_ */
